@@ -53,7 +53,7 @@ server.get('/oauth2callback', (req, res, next) => {
     authModule.oAuth2Callback(bot, req, res, next);
 });
 
-var luisModelUri = 'https://eastasia.api.cognitive.microsoft.com/luis/v2.0/apps/' + process.env.LUIS_APP + '?subscription-key=' + process.env.LUIS_SUBSCRIPTION_KEY;
+var luisModelUri = 'https://australiaeast.api.cognitive.microsoft.com/luis/v2.0/apps/' + process.env.LUIS_APP + '?subscription-key=' + process.env.LUIS_SUBSCRIPTION_KEY;
 bot.recognizer(new builder.LuisRecognizer(luisModelUri));
 
 bot.library(addEntryModule.create());
