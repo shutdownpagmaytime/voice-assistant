@@ -48,6 +48,13 @@ var bot = new builder.UniversalBot(connector, [
     }
 ]);
 
+/* GET home page. */
+router.get('/', function (req, res, next) {
+  res.render('index', {
+    title: 'I am learning Express!'
+  });
+});
+
 server.post('/api/messages', connector.listen());
 server.get('/oauth2callback', (req, res, next) => {
     authModule.oAuth2Callback(bot, req, res, next);
@@ -103,15 +110,15 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// app.use(function(err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error');
+// });
 
 module.exports = app;
 
