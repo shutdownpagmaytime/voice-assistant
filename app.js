@@ -53,7 +53,7 @@ server.get('/oauth2callback', (req, res, next) => {
     authModule.oAuth2Callback(bot, req, res, next);
 });
 
-var luisModelUri = 'https://task-planner-ampl.cognitiveservices.azure.com/luis/prediction/v3.0/apps/' + process.env.LUIS_APP + '?subscription-key=' + process.env.LUIS_SUBSCRIPTION_KEY;
+var luisModelUri = 'https://southeastasia.api.cognitive.microsoft.com/luis/v2.0/apps/' + process.env.LUIS_APP + '?subscription-key=' + process.env.LUIS_SUBSCRIPTION_KEY;
 bot.recognizer(new builder.LuisRecognizer(luisModelUri));
 
 bot.library(addEntryModule.create());
@@ -112,6 +112,3 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-app.listen(app.get('port'), function(){
-          console.log('Express server listening on port ' + app.get('port'));
-          });
