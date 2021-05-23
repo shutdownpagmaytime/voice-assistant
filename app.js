@@ -1,20 +1,19 @@
 require('dotenv-extended').load();
 
-const builder = require('botbuilder');
-const restify = require('restify');
+var builder = require('botbuilder');
+var restify = require('restify');
 
-const constants = require('./constants');
-const utils = require('./utils');
+var constants = require('./constants');
+var utils = require('./utils');
 
-const helpModule = require('./dialogs/help');
-const authModule = require('./dialogs/auth');
-const addEntryModule = require('./dialogs/addEntry');
-const removeEntryModule = require('./dialogs/removeEntry');
-const editEntryModule = require('./dialogs/editEntry');
-const checkAvailabilityModule = require('./dialogs/checkAvailability');
-const summarizeModule = require('./dialogs/summarize');
-const primaryCalendarModule = require('./dialogs/primaryCalendar');
-const prechecksModule = require('./dialogs/prechecks');
+var helpModule = require('./dialogs/help');
+var authModule = require('./dialogs/auth');
+var addEntryModule = require('./dialogs/addEntry');
+var removeEntryModule = require('./dialogs/removeEntry');
+var editEntryModule = require('./dialogs/editEntry');
+var checkAvailabilityModule = require('./dialogs/checkAvailability');
+var summarizeModule = require('./dialogs/summarize');
+var prechecksModule = require('./dialogs/prechecks');
 
 authModule.setResolvePostLoginDialog((session, args) => {
     if (!session.privateConversationData.calendarId) {
@@ -31,19 +30,19 @@ authModule.setResolvePostLoginDialog((session, args) => {
 });
 
 // setup our web server
-const server = restify.createServer();
+var server = restify.createServer();
 server.use(restify.queryParser());
 server.listen(process.env.port || process.env.PORT || 3978, () => {
     console.log('%s listening to %s', server.name, server.url);
 });
 
 // initialize the chat bot
-const connector = new builder.ChatConnector({
+var connector = new builder.ChatConnector({
     appId: process.env.MICROSOFT_APP_ID,
     appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
-const bot = new builder.UniversalBot(connector, [
+var bot = new builder.UniversalBot(connector, [
     session => {
         helpModule.help(session);
     }
@@ -54,7 +53,7 @@ server.get('/oauth2callback', (req, res, next) => {
     authModule.oAuth2Callback(bot, req, res, next);
 });
 
-const luisModelUri = 'https://eastasia.api.cognitive.microsoft.com/luis/v2.0/apps/' + process.env.LUIS_APP + '?subscription-key=' + process.env.LUIS_SUBSCRIPTION_KEY;
+var luisModelUri = 'https://eastasia.api.cognitive.microsoft.com/luis/v2.0/apps/' + process.env.LUIS_APP + '?subscription-key=' + process.env.LUIS_SUBSCRIPTION_KEY;
 bot.recognizer(new builder.LuisRecognizer(luisModelUri));
 
 bot.library(addEntryModule.create());
