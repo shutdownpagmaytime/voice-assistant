@@ -51,7 +51,7 @@ var bot = new builder.UniversalBot(connector, [
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', {
-    title: 'I am learning Express!'
+    title: 'This is the home page'
   });
 });
 
